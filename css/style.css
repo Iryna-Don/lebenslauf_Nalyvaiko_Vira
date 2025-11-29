@@ -25,6 +25,7 @@ body {
 
 /* ---------- КНОПКА ПЕЧАТИ (плавающая) ---------- */
 .print-button {
+  display: none;              /* по умолчанию скрыта на всех устройствах */
   position: fixed;
   top: 40px;
   right: 40px;
@@ -43,6 +44,13 @@ body {
 
 .print-button:hover {
   background: #e66f22; /* темнее при наведении */
+}
+
+/* показываем кнопку только на "больших" экранах (лэптопы/ПК) */
+@media screen and (min-width: 1024px) {
+  .print-button {
+    display: inline-block;
+  }
 }
 
 /* ---------- ОБЁРТКА РЕЗЮМЕ ---------- */
@@ -195,7 +203,7 @@ h1 {
     color: #000;
   }
 
-  /* ---------- скрываем кнопку при печати ---------- */
+  /* скрываем кнопку при печати */
   .print-button {
     display: none !important;
   }
@@ -215,9 +223,9 @@ hr {
   margin-top: 50px;
   border: none;
   border-top: 3px double #ff7f27;
-
 }
 
+/* ---------- ОФОРМЛЕНИЕ H1 С КОНТУРОМ ---------- */
 h1 {
   color: #ffffff;
   font-size: 48px;
@@ -227,8 +235,9 @@ h1 {
   -webkit-text-stroke: 2px #ff7f27; /* основной цветной контур */
 
   /* внутренний тень-контур (вторая линия) */
-  text-shadow: 0 0 2px #ff7f27,
-  0 0 3px #ff7f27;
+  text-shadow:
+    0 0 2px #ff7f27,
+    0 0 3px #ff7f27;
 }
 
 @media print {
