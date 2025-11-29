@@ -9,50 +9,6 @@ body {
   background: #f5f5f5;
 }
 
-/* Schulbildung: превращаем p в строки из 2 колонок */
-.grid p {
-  display: grid;
-  grid-template-columns: 140px 1fr; /* 1-я колонка — дата, 2-я — текст */
-  column-gap: 10px; /* УВЕЛИЧЕНОЕ расстояние между колонками */
-  margin: 0 0 6px;
-}
-
-.grid p .bold {
-  display: block; /* превращаем span в ячейку */
-  font-weight: bold;
-  white-space: nowrap; /* не переносить даты */
-}
-
-/* ---------- КНОПКА ПЕЧАТИ (плавающая) ---------- */
-.print-button {
-  display: none;              /* по умолчанию скрыта на всех устройствах */
-  position: fixed;
-  top: 40px;
-  right: 40px;
-  z-index: 1000;
-  padding: 10px 18px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  background: #ff7f27; /* цвет как в .lang-bar span */
-  color: #ffffff;
-  font-weight: bold;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
-  transition: background 0.2s ease;
-}
-
-.print-button:hover {
-  background: #e66f22; /* темнее при наведении */
-}
-
-/* показываем кнопку только на "больших" экранах (лэптопы/ПК) */
-@media screen and (min-width: 1024px) {
-  .print-button {
-    display: inline-block;
-  }
-}
-
 /* ---------- ОБЁРТКА РЕЗЮМЕ ---------- */
 .cv-wrapper {
   max-width: 900px;
@@ -63,10 +19,18 @@ body {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
 }
 
+/* Заголовок с двойным контуром */
 h1 {
   margin-top: 0;
-  font-size: 26px;
   margin-bottom: 25px;
+  font-size: 48px;
+  font-weight: 900;
+  color: #ffffff;
+
+  -webkit-text-stroke: 2px #ff7f27;
+  text-shadow:
+    0 0 2px #ff7f27,
+    0 0 3px #ff7f27;
 }
 
 .cv-header {
@@ -91,10 +55,11 @@ h1 {
   line-height: 1.4;
 }
 
+/* Фото в верхнем правом углу, слегка нависает над текстом */
 .photo-box {
   position: relative;
-  top: -90px; /* регулирует ВЫСОТУ над текстом */
-  right: 40px; /* регулирует отступ справа */
+  top: -90px;   /* регулирует высоту над текстом */
+  right: 40px;  /* сдвиг внутрь от правого края */
   width: auto;
   height: 250px;
   border: 3px solid #e66f22;
@@ -102,20 +67,14 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff; /* чтобы фото не перекрывало текст снизу */
-  z-index: 10; /* чтобы фото было поверх текста */
+  background: #fff;
+  z-index: 10;
 }
 
 .photo-box img {
   width: auto;
   height: 250px;
   object-fit: cover;
-}
-
-/* ---------- РАССТОЯНИЕ МЕЖДУ LI ---------- */
-.value ul li {
-  margin-bottom: 8px;
-  line-height: 1.3;
 }
 
 /* ---------- ГРИД ТЕЛА ---------- */
@@ -133,6 +92,31 @@ h1 {
 
 .value p {
   margin: 0 0 4px;
+}
+
+/* Schulbildung: превращаем p в строки из 2 колонок */
+.grid p {
+  display: grid;
+  grid-template-columns: 140px 1fr; /* 1-я колонка — дата, 2-я — текст */
+  column-gap: 10px;
+  margin: 0 0 6px;
+}
+
+.grid p .bold {
+  display: block;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* ---------- СПИСКИ ---------- */
+.value ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.value ul li {
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 /* ---------- ЯЗЫКОВЫЕ ПОЛОСЫ ---------- */
@@ -174,6 +158,169 @@ h1 {
   font-size: 20px;
 }
 
+/* ---------- ГОРИЗОНТАЛЬНАЯ ЛИНИЯ ---------- */
+hr {
+  margin-bottom: 100px;
+  margin-top: 50px;
+  border: none;
+  border-top: 3px double #ff7f27;
+}
+
+/* ---------- ЖИРНЫЙ ШРИФТ ---------- */
+.bold {
+  font-weight: bold;
+}
+
+/* ---------- РАЗРЫВ СТРАНИЦЫ ДЛЯ ПЕЧАТИ ---------- */
+.page-break {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* ---------- КНОПКА ПЕЧАТИ ---------- */
+/* По умолчанию (и на мобильных) кнопка скрыта */
+.print-button {
+  display: none;
+}
+
+/* Появляется только на больших экранах (ноут/ПК) */
+@media screen and (min-width: 1024px) {
+  .print-button {
+    display: inline-block;
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 1000;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: #ff7f27;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s ease;
+  }
+
+  .print-button:hover {
+    background: #e66f22;
+  }
+}
+
+/* ---------------- АДАПТИВНОЕ УМЕНЬШЕНИЕ ШРИФТОВ + ИЗБАВЛЕНИЕ ОТ "НАПЛЫВОВ" ---------------- */
+
+/* Средние экраны (до 1024px) — уменьшаем шрифт и делаем одну колонку,
+   чтобы длинные лейблы не ехали в текст справа */
+@media screen and (max-width: 1024px) {
+  body {
+    font-size: 15px;
+    padding: 20px;
+  }
+
+  .cv-wrapper {
+    padding: 24px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .header-left .name {
+    font-size: 20px;
+  }
+
+  .cv-body {
+    grid-template-columns: 1fr;   /* ОДНА колонка: label сверху, value снизу */
+    column-gap: 0;
+  }
+
+  .label {
+    margin-top: 8px;
+  }
+}
+
+/* Планшеты + крупные телефоны */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .cv-wrapper {
+    padding: 20px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .header-left .name {
+    font-size: 18px;
+  }
+
+  .label {
+    font-size: 14px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+
+  .cv-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-left {
+    max-width: 100%;
+  }
+
+  .photo-box {
+    position: static;
+    margin-top: 20px;
+    height: 220px;
+  }
+
+  .photo-box img {
+    height: 220px;
+  }
+}
+
+/* Маленькие телефоны */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .header-left .name {
+    font-size: 17px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .value {
+    font-size: 13px;
+  }
+
+  .photo-box {
+    height: 180px;
+  }
+
+  .photo-box img {
+    height: 180px;
+  }
+}
+
 /* ---------- ПЕЧАТЬ A4 ---------- */
 @page {
   size: A4;
@@ -191,9 +338,12 @@ h1 {
     padding: 0 !important;
     width: 100% !important;
     margin: 0 !important;
+    border-radius: 0 !important;
   }
 
   .cv-body {
+    /* В печати снова можно оставить две колонки, места достаточно */
+    grid-template-columns: 200px 1fr;
     column-gap: 25px !important;
     row-gap: 10px !important;
   }
@@ -203,44 +353,11 @@ h1 {
     color: #000;
   }
 
-  /* скрываем кнопку при печати */
+  /* Скрываем кнопку при печати гарантированно */
   .print-button {
     display: none !important;
   }
-}
 
-/* ---------------- жирный шрифт для пунктов отец и мать ----------------*/
-.bold {
-  font-weight: bold;
-}
-
-.page-break {
-  break-before: page;
-}
-
-hr {
-  margin-bottom: 100px;
-  margin-top: 50px;
-  border: none;
-  border-top: 3px double #ff7f27;
-}
-
-/* ---------- ОФОРМЛЕНИЕ H1 С КОНТУРОМ ---------- */
-h1 {
-  color: #ffffff;
-  font-size: 48px;
-  font-weight: 900;
-
-  /* двойной контур стабильнее для принтера */
-  -webkit-text-stroke: 2px #ff7f27; /* основной цветной контур */
-
-  /* внутренний тень-контур (вторая линия) */
-  text-shadow:
-    0 0 2px #ff7f27,
-    0 0 3px #ff7f27;
-}
-
-@media print {
   h1 {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
